@@ -1,13 +1,13 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Login from "../components/Login";
-import Signup from "../components/Signup";
+import ForgotPassword from "../components/ForgotPassword";
 
 const UnauthenticatedRoutes = () => (
   <Switch>
-    <Route exact path="/login" render={() => <Login />} />
-    <Route exact path="/signup" render={() => <Signup />}/>
-    <Route path="/" render={() => <Redirect to="/login" />} />
+    <Route exact path="/unauth" render={() => <Login />} />
+    <Route exact path="/forgotPassword" render={() => <ForgotPassword/>} />
+    <Route path="/" render={() => <Redirect to="/unauth" />} />
   </Switch>
 );
 
