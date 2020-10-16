@@ -19,10 +19,11 @@ const Login = () => {
   });
 
   const onSubmit = (values, actions, submitType) => {
+    const {email, password} = values;
     if (submitType === "login") {
-      Auth.login();
+      Auth.login({email, password});
     } else {
-      Auth.signup();
+      Auth.signup({email, password});
     }
     actions.setSubmitting(false);
   };
