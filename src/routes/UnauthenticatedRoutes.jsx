@@ -1,7 +1,7 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-import Login from "../components/Login";
-import ForgotPassword from "../components/ForgotPassword";
+import Login from "../components/pages/Login";
+import ForgotPassword from "../components/pages/ForgotPassword";
 
 const UnauthenticatedRoutes = () => (
   <Switch>

@@ -1,13 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { Link } from "react-router-dom";
 
-import Input from "./shared/Input";
-import Button from "./shared/Button";
-import Auth from "../utils/auth";
+import { ApplicationContext } from '../contexts/AppContext';
+import Input from "../shared/Input";
+import Button from "../shared/Button";
+import Auth from "../../utils/auth";
 
 const Login = () => {
+  const { setAuthenticated } = useContext(ApplicationContext);
+
   const initialValues = {
     email: "",
     password: "",
@@ -19,11 +22,18 @@ const Login = () => {
   });
 
   const onSubmit = async (values, setSubmitting, submitType) => {
+
     const {email, password} = values;
     if (submitType === "login") {
-      await Auth.login({email, password});
+      await Auth.login({email, password}).then(response => {
+        localStorage.setItem('token', response.token);
+        setAuthenticated(true);
+      });
     } else {
-      await Auth.signup({email, password});
+      await Auth.signup({email, password}).then(response => {
+        localStorage.setItem('token', response.token);
+        setAuthenticated(true);
+      });
     }
     setSubmitting(false);
   };

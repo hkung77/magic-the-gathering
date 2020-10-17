@@ -17,6 +17,7 @@ export const login = (body) =>
     .then((response) => {
       toast.success("User Logged In");
       return response;
+
     })
     .catch(({error}) => {
       toast.error(error);
@@ -26,14 +27,18 @@ export const signup = (body) =>
   fetchPost("/magic/signup", body)
     .then((response) => {
       toast.success("User Created");
-      // Handle token?
       return response;
     })
     .catch(({error}) => {
       toast.error(error);
     });
 
+  export const logout = () => {
+    localStorage.clear();
+  }
+
 export default {
   login,
+  logout,
   signup,
 };

@@ -3,6 +3,8 @@ import { BrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import Routes from "./routes";
 
+import ApplicationContextProvider from './components/contexts/AppContext';
+
 import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
@@ -10,7 +12,9 @@ const App = () => {
     <>
       <ToastContainer />
       <BrowserRouter>
-        <Routes />
+        <ApplicationContextProvider>
+          <Routes />
+        </ApplicationContextProvider>
       </BrowserRouter>
     </>
   );
