@@ -15,7 +15,8 @@ const fetchPost = (url, body) =>
 export const login = (body) =>
   fetchPost("/magic/login", body)
     .then((response) => {
-      return response.json();
+      toast.success("User Logged In");
+      return response;
     })
     .catch(({error}) => {
       toast.error(error);

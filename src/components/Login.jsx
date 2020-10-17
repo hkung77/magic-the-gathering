@@ -18,22 +18,30 @@ const Login = () => {
     password: Yup.string().required(),
   });
 
-  const onSubmit = (values, actions, submitType) => {
+  const onSubmit = async (values, setSubmitting, submitType) => {
     const {email, password} = values;
     if (submitType === "login") {
-      Auth.login({email, password});
+      await Auth.login({email, password});
     } else {
-      Auth.signup({email, password});
+      await Auth.signup({email, password});
     }
-    actions.setSubmitting(false);
+    setSubmitting(false);
   };
+
+  const handleLoginPress = (values, setSubmitting) => {
+    onSubmit(values, setSubmitting, 'login');
+  }
+
+  const handleSignUpPress = (values, setSubmitting) => {
+    onSubmit(values, setSubmitting, 'signup');
+  }
 
   return (
     <Formik
       initialValues={initialValues}
       initialErrors={["email", "password"]}
       validationSchema={validationSchema}
-      onSubmit={onSubmit}
+      handleSubmit={onSubmit}
     >
       {({ handleSubmit, isSubmitting, isValid, setSubmitting, values }) => (
         <form onSubmit={handleSubmit}>
@@ -49,13 +57,13 @@ const Login = () => {
             </div>
             <div className="mb-4 space-x-4">
               <Button
-                onClick={(value, action) => handleSubmit(value, action, "signup")}
+                onClick={() => { handleSignUpPress(values, setSubmitting) }}
                 bgColor="bg-blue-600"
                 label="Sign Up"
                 disabled={isSubmitting || !isValid}
               />
               <Button
-                onClick={(values, action) => handleSubmit(values, action, "login")}
+                onClick={() => { handleLoginPress(values, setSubmitting) }}
                 label="Login"
                 disabled={isSubmitting || !isValid}
               />
