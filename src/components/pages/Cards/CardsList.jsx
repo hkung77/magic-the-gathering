@@ -25,18 +25,18 @@ const CardsList = ({ cards, nextPage, isFetching }) => {
   }, [isFetching]);
 
   return (
-    <div className="flex flex-1">
-      <ul className="bg-gray-500 pt-24 flex flex-row flex-wrap justify-evenly">
+    <div className="bg-gray-500">
+      <div className="pt-24 flex flex-row flex-wrap justify-evenly">
         {cards.map(
           (card) =>
           // Skip cards without images and basic lands
             !!card.imageUrl && card.supertypes[0] !== "Basic" &&(
-              <li key={card.id} className="bg-gray-500 my-5 mx-10">
+              <div key={card.id} className="flex my-5 mx-10">
                 <img src={card.imageUrl} alt={card.name} />
-              </li>
+              </div>
             )
         )}
-      </ul>
+      </div>
     </div>
   );
 };
