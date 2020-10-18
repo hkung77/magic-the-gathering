@@ -2,7 +2,8 @@ import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { QueryCache, ReactQueryCacheProvider } from "react-query";
 import Cards from "../components/pages/Cards";
-import NavBar from "../components/shared/NavBar";
+import Layout from "../components/shared/Layout";
+import MyDeck from "../components/pages/MyDeck";
 
 const AuthenticatedRoutes = () => {
   const queryCache = new QueryCache();
@@ -14,10 +15,18 @@ const AuthenticatedRoutes = () => {
           exact
           path="/cards"
           render={() => (
-            <>
-              <NavBar />
+            <Layout>
               <Cards />
-            </>
+            </Layout>
+          )}
+        />
+        <Route
+          exact
+          path="/myDeck"
+          render={() => (
+            <Layout>
+              <MyDeck />
+            </Layout>
           )}
         />
         <Route path="/" render={() => <Redirect to="/cards" />} />

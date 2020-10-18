@@ -1,5 +1,3 @@
-import { toast } from "react-toastify";
-import { logout } from '../utils/auth';
 
 const SERVER_API = process.env.REACT_APP_SERVER_API;
 
@@ -12,29 +10,14 @@ const fetchGet = (url) => {
       authorization: token,
     },
   }).then(async (response) =>
-    response.ok ? response.json() : handleError(response)
+    response.ok
+      ? response.json()
+      : Promise.reject({ ...(await response.json()), status: response.status })
   );
-}
+};
 
-const handleError = async (response) => {
-  // NOTE:
-  // We can add more error handling responses
-  switch(response.status) {
-    case 401:
-      logout();
-      break;
-    default:
-      break;
-  }
-  
-  return Promise.reject(await response.json());
-}
-
-export const getCards = () => 
-  fetchGet('/magic/cards').then(response => {
-    console.log(response);
-    return response;
-  }).catch(({ error })  => {
-    toast.error(error);
-  })
-
+export const getCards = () =>
+  fetchGet("/magic/cards")
+    .then((response) => {
+      return response;
+    })
