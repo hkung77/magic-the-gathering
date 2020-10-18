@@ -16,8 +16,9 @@ const fetchGet = (url) => {
   );
 };
 
-export const getCards = () =>
-  fetchGet("/magic/cards")
+export const getCards = (key, page) =>
+  fetchGet(`/magic/cards?page=${page}`)
     .then((response) => {
+      console.log(response);
       return response;
     })

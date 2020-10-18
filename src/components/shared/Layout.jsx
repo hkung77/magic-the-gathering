@@ -1,9 +1,9 @@
 import React from 'react';
-import PropTypes from 'react';
+import PropTypes from 'prop-types';
 import NavBar from './NavBar';
 
 const propTypes = {
-  children: PropTypes.func,
+  children: PropTypes.oneOfType([PropTypes.func, PropTypes.any]),
 };
 
 const Layout = ({ children }) => {
