@@ -25,7 +25,7 @@ const CardsList = ({ cards, nextPage, isFetching }) => {
   }, [isFetching]);
 
   return (
-    <div className="flex flex-3 bg-gray-500 pt-24">
+    <div className="flex flex-1 h-auto bg-gray-500 pt-24">
       <ul className="flex flex-row flex-wrap justify-evenly">
         {cards.map(
           (card) =>
