@@ -6,12 +6,21 @@ export const ApplicationContext = React.createContext({
 });
 
 const ApplicationContextProvider = ({ children }) => {
-  const token = localStorage.getItem("token");
+  const hasToken = !!localStorage.getItem("token");
+  const [authenticated, setAuthenticated] = useState(hasToken);
 
-  const [authenticated, setAuthenticated] = useState(!!token);
   useEffect(() => {
-    setAuthenticated(!!token);
-  }, [token]);
+    const tokenCheck = () => {
+      const token = localStorage.getItem("token");
+      setAuthenticated(!!token);
+    };
+
+    window.addEventListener("storage", tokenCheck);
+
+    return () => {
+      window.removeEventListener("storage", tokenCheck);
+    };
+  }, []);
 
   return (
     <ApplicationContext.Provider value={{ authenticated, setAuthenticated }}>

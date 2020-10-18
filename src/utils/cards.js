@@ -32,6 +32,7 @@ const handleError = async (response) => {
 
 export const getCards = () => 
   fetchGet('/magic/cards').then(response => {
+    console.log(response);
     return response;
   }).catch(({ error })  => {
     toast.error(error);
