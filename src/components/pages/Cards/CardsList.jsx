@@ -3,10 +3,11 @@ import PropTypes from "prop-types";
 
 const propTypes = {
   cards: PropTypes.array,
-  nextPage: PropTypes.object,
+  nextPage: PropTypes.func,
+  isFetching: PropTypes.bool,
 };
 
-const CardsList = ({ cards, nextPage}) => {
+const CardsList = ({ cards, nextPage, isFetching }) => {
   // Paginate when user scrolls to the end
   const handleScroll = (e) => {
     const windowHeight =
@@ -33,7 +34,9 @@ const CardsList = ({ cards, nextPage}) => {
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    // isFetching is used to update event listener 
+    // to prevent pagination while one is in flight
+  }, [isFetching]);
 
   return (
     <div className="flex flex-3 bg-gray-500 pt-5">

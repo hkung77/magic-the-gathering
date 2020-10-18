@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useCallback, useState, useEffect, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
@@ -6,15 +6,21 @@ import { usePaginatedQuery } from "react-query";
 import { getCards } from "../../../utils/cards";
 import { ApplicationContext } from "../../contexts/AppContext";
 
-import CardsList from './CardsList';
+import CardsList from "./CardsList";
 
 const Cards = () => {
-  const [ page, setPage ] = useState(1);
-  const [ cards, setCards] = useState([]);
+  const [page, setPage] = useState(1);
+  const [cards, setCards] = useState([]);
 
   const { setAuthenticated } = useContext(ApplicationContext);
 
-  const { isLoading, data, isError, error } = usePaginatedQuery(["cards", page], getCards);
+  const {
+    isLoading,
+    latestData,
+    isError,
+    error,
+    isFetching,
+  } = usePaginatedQuery(["cards", page], getCards);
 
   useEffect(() => {
     if (isError) {
@@ -31,28 +37,31 @@ const Cards = () => {
   }, [isError, error, setAuthenticated]);
 
   useEffect(() => {
-    if (data && !isLoading) {
-      setCards([...cards, ...data]);
+    if (latestData && !isFetching) {
+      // Add paginated cards
+      setCards([...cards, ...latestData]);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[data]);
-
-  if (isError) {
-    return null;
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [latestData]);
 
   const nextPage = () => {
-    // Pass fresh state in event listeners to avoid stale data in event
-    // (https://stackoverflow.com/questions/53845595/wrong-react-hooks-behaviour-with-event-listener)
-    setPage(page => page + 1);
+    if (!isFetching) {
+      // Pass fresh state in event listeners to avoid stale data in event
+      // (https://stackoverflow.com/questions/53845595/wrong-react-hooks-behaviour-with-event-listener)
+      setPage((page) => page + 1);
+    }
+  };
+
+  if (isError) {
+    return <div />;
   }
 
-  return isLoading && !data ? (
+  return isLoading && !latestData ? (
     <div className="flex flex-1 bg-gray-500 justify-center items-center">
       <FontAwesomeIcon spin icon={faSpinner} size="6x" />
     </div>
   ) : (
-    <CardsList nextPage={nextPage} cards={cards} /> 
+    <CardsList isFetching={isFetching} nextPage={nextPage} cards={cards} />
   );
 };
 
