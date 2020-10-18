@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { useQuery } from "react-query";
 import { getCards } from "../../utils/cards";
 
 const Cards = () => {
-  const [page, setPage] = useState(1);
+  // const [page, setPage] = useState(1);
   // const [ cards, setCards] = useState([]);
 
   const { isLoading, data } = useQuery("cards", getCards);
