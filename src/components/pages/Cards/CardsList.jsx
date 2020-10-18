@@ -25,7 +25,6 @@ const CardsList = ({ cards, nextPage, isFetching }) => {
     );
     const windowBottom = windowHeight + window.pageYOffset;
     if (windowBottom >= docHeight) {
-      console.log("bottom");
       nextPage();
     }
   };
@@ -39,12 +38,12 @@ const CardsList = ({ cards, nextPage, isFetching }) => {
   }, [isFetching]);
 
   return (
-    <div className="flex flex-3 bg-gray-500 pt-5">
+    <div className="flex flex-3 bg-gray-500 pt-24">
       <ul className="flex flex-row flex-wrap justify-evenly">
         {cards.map(
           (card) =>
             !!card.imageUrl && (
-              <li key={card.id} className="my-5">
+              <li key={card.id} className="my-5 mx-10">
                 <img src={card.imageUrl} alt={card.name} />
               </li>
             )
