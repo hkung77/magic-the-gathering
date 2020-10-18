@@ -45,11 +45,9 @@ const Cards = () => {
   }, [latestData]);
 
   const nextPage = () => {
-    if (!isFetching) {
-      // Pass fresh state in event listeners to avoid stale data in event
-      // (https://stackoverflow.com/questions/53845595/wrong-react-hooks-behaviour-with-event-listener)
-      setPage((page) => page + 1);
-    }
+    // Pass fresh state in event listeners to avoid stale data in event
+    // (https://stackoverflow.com/questions/53845595/wrong-react-hooks-behaviour-with-event-listener)
+    setPage((page) => page + 1);
   };
 
   if (isError) {
