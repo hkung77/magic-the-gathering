@@ -35,6 +35,7 @@ export const signup = (body) =>
 
   export const logout = () => {
     localStorage.clear();
+    document.location.reload();
   }
 
 export default {
