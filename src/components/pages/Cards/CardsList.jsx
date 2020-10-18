@@ -21,6 +21,7 @@ const CardsList = ({ cards, nextPage, isFetching }) => {
     return () => window.removeEventListener("scroll", handleScroll);
     // isFetching is used to update event listener 
     // to prevent pagination while one is in flight
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFetching]);
 
   return (
@@ -29,7 +30,7 @@ const CardsList = ({ cards, nextPage, isFetching }) => {
         {cards.map(
           (card) =>
           // Skip cards without images and basic lands
-            !!card.imageUrl && card.supertypes[0] !== "Basic" && (
+            !!card.imageUrl && card.supertypes[0] !== "Basic" &&(
               <li key={card.id} className="my-5 mx-10">
                 <img src={card.imageUrl} alt={card.name} />
               </li>
