@@ -10,7 +10,7 @@ const NavBar = () => {
   };
 
   return (
-    <nav className="flex items-center justify-between flex-wrap bg-indigo-700 h-20 w-screen px-5 fixed">
+    <nav className="z-10 flex items-center justify-between flex-wrap bg-indigo-700 h-20 w-screen px-5 pr-10 fixed">
       <div className="flex flex-row flex-1 h-full items-center">
         <Link className="w-none flex items-center justify-center h-20 md:w-32 px-5 hover:bg-blue-500 " to="/cards">
           <span className="text-white">Cards</span>

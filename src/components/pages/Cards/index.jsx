@@ -6,17 +6,16 @@ import { usePaginatedQuery } from "react-query";
 import { getCards } from "../../../utils/cards";
 import { ApplicationContext } from "../../contexts/AppContext";
 
-import Filter from './Filter';
-// import CardsList from "./CardsList";
+import Filter from "./Filter";
+import CardsList from "./CardsList";
 
 const Cards = () => {
   const [page, setPage] = useState(1);
   const [cards, setCards] = useState([]);
-  const [filter, setFilter] = useState({}) 
+  const [filter, setFilter] = useState({});
 
   const { setAuthenticated } = useContext(ApplicationContext);
 
-/*
   const {
     isLoading,
     latestData,
@@ -56,19 +55,18 @@ const Cards = () => {
   if (isError) {
     return <div />;
   }
-*/
-const handleSearch = () => {};
 
-  // return isLoading && !latestData ? (
-  //   <div className="flex flex-1 bg-gray-500 justify-center items-center">
-  //     <FontAwesomeIcon spin icon={faSpinner} size="6x" />
-  //   </div>
-  // ) : (
- return (
-  <>
-  <Filter handleSearch={handleSearch}/>
-    {/* <CardsList isFetching={isFetching} nextPage={nextPage} cards={cards} /> */}
-    </>
+  const handleSearch = () => {};
+
+  return isLoading && !latestData ? (
+    <div className="flex flex-1 bg-gray-500 justify-center items-center">
+      <FontAwesomeIcon spin icon={faSpinner} size="6x" />
+    </div>
+  ) : (
+    <div className="pt-24 bg-gray-500">
+      <Filter handleSearch={handleSearch} />
+      <CardsList isFetching={isFetching} nextPage={nextPage} cards={cards} />
+    </div>
   );
 };
 

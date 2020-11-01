@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Select from "react-select";
 
 import ManaOption from "./ManaOption";
@@ -13,21 +14,38 @@ const mana = [
   { value: "green" },
 ];
 
-const ManaSelect = () => {
-  return (
-    <div className="w-56">
-      <Select
-        options={mana}
-        isMulti={true}
-        closeOnMenuSelect={false}
-        components={{
-          Option: ManaOption,
-          MultiValue: MultiValueContainer,
-          ValueContainer: ManaValueContainer,
-        }}
-      />
-    </div>
-  );
+const propTypes = {
+  setDraftFilter: PropTypes.func,
+  draftFilter: PropTypes.object,
 };
 
+const ManaSelect = React.memo(
+  ({ setDraftFilter, draftFilter }) => {
+    const handleSelect = (options) => {
+      const manaFilters = options.map((option) => option.value).join();
+      setDraftFilter({ ...draftFilter, colors: manaFilters });
+    };
+
+    return (
+      <div className="w-56">
+        <Select
+          onChange={handleSelect}
+          options={mana}
+          isMulti={true}
+          closeOnMenuSelect={false}
+          placeholder="Mana"
+          components={{
+            Option: ManaOption,
+            MultiValue: MultiValueContainer,
+            ValueContainer: ManaValueContainer,
+          }}
+        />
+      </div>
+    );
+  },
+  (prevProps, nextProps) =>
+    prevProps.draftFilter?.colors === nextProps.draftFilter?.colors
+);
+
+ManaSelect.propTypes = propTypes;
 export default ManaSelect;
