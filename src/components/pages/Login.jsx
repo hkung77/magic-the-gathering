@@ -26,6 +26,7 @@ const Login = () => {
     const {email, password} = values;
     if (submitType === "login") {
       await Auth.login({email, password}).then(response => {
+        console.log(response);
         localStorage.setItem('token', response.token);
         setAuthenticated(true);
       });

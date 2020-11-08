@@ -13,14 +13,13 @@ const TYPES = [
 ];
 
 const propTypes = {
-  draftFilter: PropTypes.object,
-  setDraftFilter: PropTypes.func,
+  setType: PropTypes.func,
 };
 
 const TypeSelect = React.memo(
-  ({ setDraftFilter, draftFilter }) => {
+  ({ setType }) => {
     const handleSelect = (option) => {
-      setDraftFilter({ ...draftFilter, type: option.value });
+      setType(option.value);
     };
 
     return (
@@ -37,7 +36,7 @@ const TypeSelect = React.memo(
     );
   },
   (prevProps, nextProps) =>
-    prevProps.draftFilter?.type === nextProps.draftFilter?.type
+    prevProps?.type === nextProps?.type
 );
 
 TypeSelect.propTypes = propTypes;

@@ -10,16 +10,19 @@ const propTypes = {
 };
 
 
-const Filter = ({ handleSearch }) => {
-  const [ draftFilter, setDraftFilter ] = useState({});
+const Filter = ({ setFilter }) => {
+  const [ type, setType ] = useState('');
+  const [ colors, setColors ] = useState('');
+  const [ text, setText ] = useState('');
+
 
   return (
     <div className="w-full d-flex flex space-x-2 pb-2 px-2 bg-gray-500 justify-end pr-4">
-      <TypeSelect draftFilter={draftFilter} setDraftFilter={setDraftFilter} />
-      <ManaSelect draftFilter={draftFilter} setDraftFilter={setDraftFilter} />
-      <TextSearch setDraftFilter={setDraftFilter} />
+      <TypeSelect type={type} setType={setType} />
+      <ManaSelect colors={colors} setColor={setColors} />
+      <TextSearch setText={setText} text={text}/>
       <div className="d-flex flex">
-        <Button label="Search" onClick={() => {}} />
+        <Button label="Search" onClick={() => {setFilter({ type, colors, text })}} />
       </div>
     </div>
   );

@@ -16,9 +16,17 @@ const fetchGet = (url) => {
   );
 };
 
-export const getCards = (key, page) =>
-  fetchGet(`/magic/cards?page=${page}`)
+export const getCards = (key, page, filters) => {
+  let URL = `/magic/cards?page=${page}&`;
+  // Apply all filters
+  Object.keys(filters).forEach(key => {
+    URL = URL.concat(`${key}=${filters[key]}&`)
+  });
+
+  URL = URL.substring(0, URL.length - 1);
+  return fetchGet(URL)
     .then((response) => {
-      console.log(response);
       return response;
-    })
+ })
+
+}

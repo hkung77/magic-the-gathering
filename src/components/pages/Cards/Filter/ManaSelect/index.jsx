@@ -15,15 +15,14 @@ const mana = [
 ];
 
 const propTypes = {
-  setDraftFilter: PropTypes.func,
-  draftFilter: PropTypes.object,
+  setColors: PropTypes.func,
 };
 
 const ManaSelect = React.memo(
-  ({ setDraftFilter, draftFilter }) => {
+  ({ setColor }) => {
     const handleSelect = (options) => {
       const manaFilters = options.map((option) => option.value).join();
-      setDraftFilter({ ...draftFilter, colors: manaFilters });
+      setColor(manaFilters);
     };
 
     return (
@@ -44,7 +43,7 @@ const ManaSelect = React.memo(
     );
   },
   (prevProps, nextProps) =>
-    prevProps.draftFilter?.colors === nextProps.draftFilter?.colors
+    prevProps.colors === nextProps.colors 
 );
 
 ManaSelect.propTypes = propTypes;

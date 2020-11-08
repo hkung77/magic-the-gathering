@@ -22,7 +22,7 @@ const Cards = () => {
     isError,
     error,
     isFetching,
-  } = usePaginatedQuery(["cards", page], getCards);
+  } = usePaginatedQuery(["cards", page, filter], getCards);
 
   useEffect(() => {
     if (isError) {
@@ -46,6 +46,10 @@ const Cards = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [latestData]);
 
+  useEffect(() => {
+    setCards([]);
+  }, [filter])
+
   const nextPage = () => {
     // Pass fresh state in event listeners to avoid stale data in event
     // (https://stackoverflow.com/questions/53845595/wrong-react-hooks-behaviour-with-event-listener)
@@ -56,15 +60,13 @@ const Cards = () => {
     return <div />;
   }
 
-  const handleSearch = () => {};
-
-  return isLoading && !latestData ? (
+  return (isLoading && !latestData) || (isFetching && cards.length === 0 )? (
     <div className="flex flex-1 bg-gray-500 justify-center items-center">
       <FontAwesomeIcon spin icon={faSpinner} size="6x" />
     </div>
   ) : (
     <div className="pt-24 bg-gray-500">
-      <Filter handleSearch={handleSearch} />
+      <Filter setFilter={setFilter} />
       <CardsList isFetching={isFetching} nextPage={nextPage} cards={cards} />
     </div>
   );
