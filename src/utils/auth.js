@@ -21,6 +21,7 @@ export const login = (body) =>
     })
     .catch(({error}) => {
       toast.error(error);
+      return Promise.reject();
     });
 
 export const signup = (body) =>
@@ -31,6 +32,7 @@ export const signup = (body) =>
     })
     .catch(({error}) => {
       toast.error(error);
+      return Promise.reject();
     });
 
   export const logout = () => {
