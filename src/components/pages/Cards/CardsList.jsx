@@ -4,13 +4,13 @@ import PropTypes from "prop-types";
 const propTypes = {
   cards: PropTypes.array,
   nextPage: PropTypes.func,
-  isFetching: PropTypes.bool,
+  isFetchingMore: PropTypes.bool,
 };
 
-const CardsList = ({ cards, nextPage, isFetching }) => {
+const CardsList = ({ cards, nextPage, isFetchingMore }) => {
   // Paginate when user scrolls to the end
   const handleScroll = (e) => {
-    if (((window.innerHeight + window.scrollY) >= document.body.scrollHeight) && !isFetching) {
+    if (((window.innerHeight + window.scrollY) >= document.body.scrollHeight) && !isFetchingMore) {
       nextPage();
     }
   };
@@ -22,7 +22,7 @@ const CardsList = ({ cards, nextPage, isFetching }) => {
     // isFetching is used to update event listener 
     // to prevent pagination while one is in flight
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isFetching]);
+  }, [cards]);
 
   return (
     <div className="bg-gray-500">

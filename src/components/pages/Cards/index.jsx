@@ -2,27 +2,27 @@ import React, { useState, useEffect, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
-import { usePaginatedQuery } from "react-query";
+import { useInfiniteQuery } from "react-query";
 import { getCards } from "../../../utils/cards";
 import { ApplicationContext } from "../../contexts/AppContext";
 
 import Filter from "./Filter";
 import CardsList from "./CardsList";
 
-const Cards = () => {
-  const [page, setPage] = useState(1);
+const Cards = React.memo(() => {
   const [cards, setCards] = useState([]);
   const [filter, setFilter] = useState({});
 
   const { setAuthenticated } = useContext(ApplicationContext);
 
   const {
-    isLoading,
-    latestData,
+    data,
     isError,
     error,
     isFetching,
-  } = usePaginatedQuery(["cards", page, filter], getCards);
+    isFetchingMore,
+    fetchMore,
+  } = useInfiniteQuery(["cards", filter], getCards);
 
   useEffect(() => {
     if (isError) {
@@ -39,21 +39,24 @@ const Cards = () => {
   }, [isError, error, setAuthenticated]);
 
   useEffect(() => {
-    if (latestData && !isFetching) {
-      // Add paginated cards
-      setCards([...cards, ...latestData]);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [latestData]);
-
-  useEffect(() => {
     setCards([]);
   }, [filter]);
 
+  useEffect(() => {
+
+    // Sets the cards from inital cache regardless of fetching
+    if (data && data.flat().length !== cards.length) {
+      setCards(data.flat());
+    }
+    // Set cards queried after the first and every subsequent request
+    else if (data && !isFetching && !isFetchingMore && cards.length !== data.flat().length) {
+      // Add paginated cards
+      setCards(data.flat());
+    }     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
+
   const nextPage = () => {
-    // Pass fresh state in event listeners to avoid stale data in event
-    // (https://stackoverflow.com/questions/53845595/wrong-react-hooks-behaviour-with-event-listener)
-    setPage((page) => page + 1);
+    fetchMore(data.length + 1)
   };
 
   if (isError) {
@@ -63,15 +66,15 @@ const Cards = () => {
   return (
     <div className="pt-24 bg-gray-500 flex-1">
       <Filter setFilter={setFilter} />
-      {(isLoading && !latestData) || (isFetching && cards.length === 0) ? (
+      {(isFetching && !data) ? (
         <div className="flex flex-1 bg-gray-500 justify-center items-center pt-48">
           <FontAwesomeIcon spin icon={faSpinner} size="6x" />
         </div>
       ) : (
-        <CardsList isFetching={isFetching} nextPage={nextPage} cards={cards} />
+        <CardsList isFetchingMore={isFetchingMore} nextPage={nextPage} cards={cards} />
       )}
     </div>
   );
-};
+});
 
 export default Cards;

@@ -5,7 +5,7 @@ import Cards from "../components/pages/Cards";
 import Layout from "../components/shared/Layout";
 import MyDeck from "../components/pages/MyDeck";
 
-const AuthenticatedRoutes = () => {
+const AuthenticatedRoutes = React.memo(() => {
   const queryCache = new QueryCache();
 
   return (
@@ -33,6 +33,6 @@ const AuthenticatedRoutes = () => {
       </Switch>
     </ReactQueryCacheProvider>
   );
-};
+});
 
 export default AuthenticatedRoutes;

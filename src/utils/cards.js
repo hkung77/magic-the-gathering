@@ -16,7 +16,7 @@ const fetchGet = (url) => {
   );
 };
 
-export const getCards = (key, page, filters) => {
+export const getCards = (key, filters, page = 1) => {
   let URL = `/magic/cards?page=${page}&`;
   // Apply all filters
   Object.keys(filters).forEach(key => {
