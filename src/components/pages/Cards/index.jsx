@@ -48,7 +48,7 @@ const Cards = () => {
 
   useEffect(() => {
     setCards([]);
-  }, [filter])
+  }, [filter]);
 
   const nextPage = () => {
     // Pass fresh state in event listeners to avoid stale data in event
@@ -60,14 +60,16 @@ const Cards = () => {
     return <div />;
   }
 
-  return (isLoading && !latestData) || (isFetching && cards.length === 0 )? (
-    <div className="flex flex-1 bg-gray-500 justify-center items-center">
-      <FontAwesomeIcon spin icon={faSpinner} size="6x" />
-    </div>
-  ) : (
-    <div className="pt-24 bg-gray-500">
+  return (
+    <div className="pt-24 bg-gray-500 flex-1">
       <Filter setFilter={setFilter} />
-      <CardsList isFetching={isFetching} nextPage={nextPage} cards={cards} />
+      {(isLoading && !latestData) || (isFetching && cards.length === 0) ? (
+        <div className="flex flex-1 bg-gray-500 justify-center items-center pt-48">
+          <FontAwesomeIcon spin icon={faSpinner} size="6x" />
+        </div>
+      ) : (
+        <CardsList isFetching={isFetching} nextPage={nextPage} cards={cards} />
+      )}
     </div>
   );
 };
